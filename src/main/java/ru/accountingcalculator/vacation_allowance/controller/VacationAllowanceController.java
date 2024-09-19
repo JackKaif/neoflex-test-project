@@ -1,7 +1,6 @@
 package ru.accountingcalculator.vacation_allowance.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,15 +14,15 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 public class VacationAllowanceController {
-    @Autowired
-    VacationAllowanceService vacationAllowanceService;
+    final VacationAllowanceService vacationAllowanceService;
 
     @GetMapping("/vacation-allowance-calculator")
     public VacationAllowancePayment getAllowancePayment(
             @RequestParam("averageSalary") double averageSalary,
             @RequestParam("vacationDuration") int vacationDuration,
-            @RequestParam
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> vacationStartsDate) {
+            @RequestParam(value = "vacationStartsDate", required = false)
+                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> vacationStartsDate
+    ) {
         return vacationAllowanceService.getVacationAllowance(averageSalary, vacationDuration, vacationStartsDate);
     }
 }

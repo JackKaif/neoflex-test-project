@@ -8,7 +8,6 @@ import java.time.Month;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class VacationAllowanceService {
@@ -33,13 +32,13 @@ public class VacationAllowanceService {
     public VacationAllowancePayment getVacationAllowance(double averageSalary,
                                                          int vacationDuration,
                                                          Optional<LocalDate> vacationStartsDate) {
-        long vacationDurationWoNonholidays = vacationDuration;
+        long vacationDurationWoHolidays = vacationDuration;
         if (vacationStartsDate.isPresent()) {
-        vacationDurationWoNonholidays = vacationStartsDate.get().datesUntil(vacationStartsDate.get().plusDays(vacationDuration))
+            vacationDurationWoHolidays = vacationStartsDate.get().datesUntil(vacationStartsDate.get().plusDays(vacationDuration))
                     .filter(date -> !isHoliday(date))
                     .count();
         }
-        var vacationAllowanceAmount = averageSalary / AVERAGE_NONHOLIDAYS_IN_MONTH * vacationDurationWoNonholidays * (1 - INCOME_TAX);
+        var vacationAllowanceAmount = averageSalary / AVERAGE_NONHOLIDAYS_IN_MONTH * vacationDurationWoHolidays * (1 - INCOME_TAX);
         var vacationAllowanceAmountRounded = Math.round(vacationAllowanceAmount * 100.00) / 100.00;
         return new VacationAllowancePayment(vacationAllowanceAmountRounded);
     }

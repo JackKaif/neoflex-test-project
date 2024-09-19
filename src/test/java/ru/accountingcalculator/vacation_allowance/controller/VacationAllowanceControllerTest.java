@@ -1,4 +1,4 @@
-package ru.accountingcalculator.vacation_allowance.service;
+package ru.accountingcalculator.vacation_allowance.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class VacationAllowanceServiceTest {
-
-    @Autowired
-    VacationAllowanceService vacationAllowanceService;
-
+class VacationAllowanceControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -25,7 +21,6 @@ class VacationAllowanceServiceTest {
         double averageSalary = 40000;
         int vacationDuration = 14;
         double expected = 16627.99;
-
         var request = get("/vacation-allowance-calculator")
                 .param("averageSalary", String.valueOf(averageSalary))
                 .param("vacationDuration", String.valueOf(vacationDuration));
