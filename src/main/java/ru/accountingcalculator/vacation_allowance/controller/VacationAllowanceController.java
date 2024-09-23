@@ -9,7 +9,6 @@ import ru.accountingcalculator.vacation_allowance.model.VacationAllowancePayment
 import ru.accountingcalculator.vacation_allowance.service.VacationAllowanceService;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,9 +18,9 @@ public class VacationAllowanceController {
     @GetMapping("/vacation-allowance-calculator")
     public VacationAllowancePayment getAllowancePayment(
             @RequestParam("averageSalary") double averageSalary,
-            @RequestParam("vacationDuration") int vacationDuration,
+            @RequestParam("vacationDuration") long vacationDuration,
             @RequestParam(value = "vacationStartsDate", required = false)
-                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> vacationStartsDate
+                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate vacationStartsDate
     ) {
         return vacationAllowanceService.getVacationAllowance(averageSalary, vacationDuration, vacationStartsDate);
     }
